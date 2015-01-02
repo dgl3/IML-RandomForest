@@ -5,9 +5,11 @@ function [ K ] = compute_gram_model( data, parameter )
         xi = data(i);
         for j=1:numInstances
             xj = data(j);
-            numerator = -L2_distance(xi,xj,0).^2;
+            %X = [xi;xj];
+            %numerator = pdist(X).^2;
+            numerator = L2_distance(xi,xj,0).^2;
             denominator = (2*parameter).^2;
-            Kij = exp(numerator/denominator);
+            Kij = exp(-(numerator/denominator));
             K(i,j) = Kij;
         end
     end

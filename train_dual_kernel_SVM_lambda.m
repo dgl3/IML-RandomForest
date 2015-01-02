@@ -1,5 +1,5 @@
 function [ model, other_values ] = train_dual_kernel_SVM_lambda( data, labels, lambda, K )
-  m = size(data,2);
+    m = size(data,2);
     
     %Q = diag(labels)*data'*data*diag(labels);
     %K(i,j) = K(xi,xj), where x is equal to data
