@@ -9,5 +9,5 @@ eigenvalues = eig(K);
 imagesc(K);
 
 
-[ model, other_values ] = train_dual_kernel_SVM_lambda(data,labels,lambda,K);
-plot_dataset( data, labels, model );
+model = train_dual_kernel_SVM_lambda(data,labels,lambda,K);
+plot_dataset( data, labels, model, K );

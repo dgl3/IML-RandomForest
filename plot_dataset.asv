@@ -22,10 +22,10 @@ function [ ] = plot_dataset( data, labels, model, K )
     for i=1:size(data,2)
         X = data(1,i);
         lineX=[lineX, X];
-        Y = getY(i,model,K,labels);
+        Y = getY(X,model,);
         lineY=[lineY, Y];
-        %lineYpos=[lineYpos, Ypos];
-        %lineYneg=[lineYneg, Yneg];
+        lineYpos=[lineYpos, Ypos];
+        lineYneg=[lineYneg, Yneg];
     end
     plot(lineX, lineY);
     %plot(lineX, lineYpos, 'g--');

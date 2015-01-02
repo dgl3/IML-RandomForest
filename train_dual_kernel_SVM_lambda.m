@@ -1,4 +1,4 @@
-function [ model, other_values ] = train_dual_kernel_SVM_lambda( data, labels, lambda, K )
+function model = train_dual_kernel_SVM_lambda( data, labels, lambda, K )
     m = size(data,2);
     
     %Q = diag(labels)*data'*data*diag(labels);
@@ -12,15 +12,7 @@ function [ model, other_values ] = train_dual_kernel_SVM_lambda( data, labels, l
             v <= lambda;
             v'*labels == 0;
     cvx_end
-
-    w = data*(v.*labels);
-    b = -(w'*data-1/labels)*v/sum(v);
-    model = [b;w];
     
-    images = labels'.*(w'*data+b)-1;
-    indNeg = images<=0;
-    errorRate = sum(images(indNeg==1))*-1;
-    
-    other_values = struct('lambda',lambda,'errorRate',errorRate);
+    model = v;
 end
 
