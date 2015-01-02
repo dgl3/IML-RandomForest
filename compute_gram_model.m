@@ -1,18 +1,5 @@
-function [ K ] = compute_gram_model( data, parameter )
-    numInstances = size(data,2);
-    K = zeros(numInstances, numInstances, 'double');
-    for i=1:numInstances
-        xi = data(i);
-        for j=1:numInstances
-            xj = data(j);
-            %X = [xi;xj];
-            %numerator = pdist(X).^2;
-            numerator = L2_distance(xi,xj,0).^2;
-            denominator = (2*parameter).^2;
-            Kij = exp(-(numerator/denominator));
-            K(i,j) = Kij;
-        end
-    end
-
+function [ K ] = compute_gram_model( data, sigma )
+    dist = L2_distance(data,data,0);
+    K = exp(-dist/(2*sigma.^2));
 end
 
