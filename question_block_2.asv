@@ -8,7 +8,17 @@ Y = labels;
 tree = classregtree(X,Y);
 view(tree)
 tree
-
 yPredicted = eval(tree,X);
-incorrectPredictions = sum((Y == yPredicted) == 0);
-trainingError = (incorrectPredictions/size(data,2))*100;
+
+
+costTest = test(tree,'test',X,Y);
+costResubstitution = test(tree,'resubstitution');
+
+%{
+%Compute the full tree
+fullTree = classregtree(X,Y,'prune','off');
+view(fullTree);
+fullTree
+costTestFull = test(fullTree,'test',X,Y);
+costResubstitutionFull = test(fullTree,'resubstitution');
+%}
