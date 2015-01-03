@@ -12,3 +12,11 @@ tree
 yPredicted = eval(tree,X);
 incorrectPredictions = sum((Y == yPredicted) == 0);
 trainingError = (incorrectPredictions/size(data,2))*100;
+
+notPrunedTree = classregtree(X,Y, 'prune', 'off', 'minparent',1);
+view(notPrunedTree)
+notPrunedTree
+
+yPredicted2 = eval(notPrunedTree,X);
+incorrectPredictions2 = sum((Y == yPredicted2) == 0);
+trainingError2 = (incorrectPredictions2/size(data,2))*100;
