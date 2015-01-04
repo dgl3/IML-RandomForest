@@ -1,6 +1,10 @@
 load('example_dataset_1.mat');
 K = 5;
 
+perm = randperm(size(data,2));
+data = data(:,perm);
+labels = labels(perm);
+
 %External Cross-Validation
 indexes = create_KFolds(K,data,labels);
 Eout = [];
