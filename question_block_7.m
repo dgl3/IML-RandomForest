@@ -20,10 +20,11 @@ labelsAus = labelsAus(perm);
 
 K = 10;
 indexes = create_KFolds(K,dataAus,labelsAus);
-EoutAus = [];
+EoutAusDT = [];
+EoutAusSVM = [];
 for i=1:K
     [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(i,:),dataAus,labelsAus');
-     %Tree - minparent 1
+     %Tree
     tree = classregtree(XTrain', YTrain, 'minparent',3);
     %view(tree1);
     tree;
@@ -31,7 +32,15 @@ for i=1:K
     yPredicted = eval(tree,XTest');
     incorrectPredictions = sum((YTest == yPredicted) == 0);
     Eout = (incorrectPredictions/size(XTest,2))*100;
-    EoutAus = [EoutAus; Eout];
+    EoutAusDT = [EoutAusDT; Eout];
+    
+    %SVM
+    KTrain = compute_gram_model(XTrain, XTrain, sigma);
+    model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
+    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
+    KTest = compute_gram_model(XTrain, XTest, sigma);
+    errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
+    EoutAusSVM = [EoutAusSVM; errorTest];
 end
 
 %bcw.mat
@@ -44,7 +53,8 @@ labels = labels(perm);
 
 K = 10;
 indexes = create_KFolds(K,data,labels);
-EoutBcw = [];
+EoutBcwDT = [];
+EoutBcwSVM = [];
 for i=1:K
     [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(i,:),data,labels');
      %Tree - minparent 1
@@ -55,7 +65,15 @@ for i=1:K
     yPredicted = eval(tree,XTest');
     incorrectPredictions = sum((YTest == yPredicted) == 0);
     Eout = (incorrectPredictions/size(XTest,2))*100;
-    EoutBcw = [EoutBcw; Eout];
+    EoutBcwDT = [EoutBcwDT; Eout];
+    
+    %SVM
+    KTrain = compute_gram_model(XTrain, XTrain, sigma);
+    model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
+    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
+    KTest = compute_gram_model(XTrain, XTest, sigma);
+    errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
+    EoutBcwSVM = [EoutBcwSVM; errorTest];
 end
 
 %bid.mat
@@ -68,7 +86,8 @@ labels = labels(perm);
 
 K = 10;
 indexes = create_KFolds(K,data,labels);
-EoutBid = [];
+EoutBidDT = [];
+EoutBidSVM = [];
 for i=1:K
     [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(i,:),data,labels');
      %Tree - minparent 1
@@ -79,7 +98,15 @@ for i=1:K
     yPredicted = eval(tree,XTest');
     incorrectPredictions = sum((YTest == yPredicted) == 0);
     Eout = (incorrectPredictions/size(XTest,2))*100;
-    EoutBid = [EoutBid; Eout];
+    EoutBidDT = [EoutBidDT; Eout];
+    
+    %SVM
+    KTrain = compute_gram_model(XTrain, XTrain, sigma);
+    model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
+    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
+    KTest = compute_gram_model(XTrain, XTest, sigma);
+    errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
+    EoutBidSVM = [EoutBidSVM; errorTest];
 end
 
 
@@ -93,7 +120,8 @@ labels = labels(perm);
 
 K = 10;
 indexes = create_KFolds(K,data,labels);
-EoutBre = [];
+EoutBreDT = [];
+EoutBreSVM = [];
 for i=1:K
     [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(i,:),data,labels');
      %Tree - minparent 1
@@ -104,7 +132,15 @@ for i=1:K
     yPredicted = eval(tree,XTest');
     incorrectPredictions = sum((YTest == yPredicted) == 0);
     Eout = (incorrectPredictions/size(XTest,2))*100;
-    EoutBre = [EoutBre; Eout];
+    EoutBreDT = [EoutBreDT; Eout];
+    
+    %SVM
+    KTrain = compute_gram_model(XTrain, XTrain, sigma);
+    model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
+    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
+    KTest = compute_gram_model(XTrain, XTest, sigma);
+    errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
+    EoutBreSVM = [EoutBreSVM; errorTest];
 end
 
 %car.mat
@@ -117,7 +153,8 @@ labels = labels(perm);
 
 K = 10;
 indexes = create_KFolds(K,data,labels);
-EoutCar = [];
+EoutCarDT = [];
+EoutCarSVM = [];
 for i=1:K
     [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(i,:),data,labels');
      %Tree - minparent 1
@@ -128,7 +165,15 @@ for i=1:K
     yPredicted = eval(tree,XTest');
     incorrectPredictions = sum((YTest == yPredicted) == 0);
     Eout = (incorrectPredictions/size(XTest,2))*100;
-    EoutCar = [EoutCar; Eout];
+    EoutCarDT = [EoutCarDT; Eout];
+    
+    %SVM
+    KTrain = compute_gram_model(XTrain, XTrain, sigma);
+    model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
+    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
+    KTest = compute_gram_model(XTrain, XTest, sigma);
+    errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
+    EoutCarSVM = [EoutCarSVM; errorTest];
 end
 
 %cmc.mat
@@ -141,7 +186,8 @@ labels = labels(perm);
 
 K = 10;
 indexes = create_KFolds(K,data,labels);
-EoutCmc = [];
+EoutCmcDT = [];
+EoutCmcSVM = [];
 for i=1:K
     [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(i,:),data,labels');
      %Tree - minparent 1
@@ -153,7 +199,15 @@ for i=1:K
     yPredicted = str2num(cell2mat(yPredicted));
     incorrectPredictions = sum((YTest == yPredicted) == 0);
     Eout = (incorrectPredictions/size(XTest,2))*100;
-    EoutCmc = [EoutCmc; Eout];
+    EoutCmcDT = [EoutCmcDT; Eout];
+    
+    %SVM
+    KTrain = compute_gram_model(XTrain, XTrain, sigma);
+    model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
+    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
+    KTest = compute_gram_model(XTrain, XTest, sigma);
+    errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
+    EoutCmcSVM = [EoutCmcSVM; errorTest];
 end
 
 %ech.mat
@@ -166,7 +220,8 @@ labels = labels(perm);
 
 K = 10;
 indexes = create_KFolds(K,data,labels);
-EoutEch = [];
+EoutEchDT = [];
+EoutEchSVM = [];
 for i=1:K
     [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(i,:),data,labels');
      %Tree - minparent 1
@@ -177,7 +232,15 @@ for i=1:K
     yPredicted = eval(tree,XTest');
     incorrectPredictions = sum((YTest == yPredicted) == 0);
     Eout = (incorrectPredictions/size(XTest,2))*100;
-    EoutEch = [EoutEch; Eout];
+    EoutEchDT = [EoutEchDT; Eout];
+    
+    %SVM
+    KTrain = compute_gram_model(XTrain, XTrain, sigma);
+    model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
+    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
+    KTest = compute_gram_model(XTrain, XTest, sigma);
+    errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
+    EoutEchSVM = [EoutEchSVM; errorTest];
 end
 
 %fac.mat
@@ -191,6 +254,7 @@ labels = labels(perm);
 K = 10;
 indexes = create_KFolds(K,data,labels);
 EoutFac = [];
+EoutFacSVM =[];
 for i=1:K
     [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(i,:),data,labels');
      %Tree - minparent 1
@@ -202,6 +266,14 @@ for i=1:K
     incorrectPredictions = sum((YTest == yPredicted) == 0);
     Eout = (incorrectPredictions/size(XTest,2))*100;
     EoutFac = [EoutFac; Eout];
+    
+    %SVM
+    KTrain = compute_gram_model(XTrain, XTrain, sigma);
+    model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
+    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
+    KTest = compute_gram_model(XTrain, XTest, sigma);
+    errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
+    EoutFacSVM = [EoutFacSVM; errorTest];
 end
 
 
@@ -215,7 +287,8 @@ labels = labels(perm);
 
 K = 10;
 indexes = create_KFolds(K,data,labels);
-EoutGer = [];
+EoutGerDT = [];
+EoutGerSVM = [];
 for i=1:K
     [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(i,:),data,labels');
      %Tree - minparent 1
@@ -228,7 +301,15 @@ for i=1:K
 
     incorrectPredictions = sum((YTest == yPredicted) == 0);
     Eout = (incorrectPredictions/size(XTest,2))*100;
-    EoutGer = [EoutGer; Eout];
+    EoutGerDT = [EoutGerDT; Eout];
+    
+    %SVM
+    KTrain = compute_gram_model(XTrain, XTrain, sigma);
+    model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
+    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
+    KTest = compute_gram_model(XTrain, XTest, sigma);
+    errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
+    EoutGerSVM = [EoutGerSVM; errorTest];
 end
 
 %hec.mat
@@ -241,7 +322,8 @@ labels = labels(perm);
 
 K = 10;
 indexes = create_KFolds(K,data,labels);
-EoutHec = [];
+EoutHecDT = [];
+EoutHecSVM = [];
 for i=1:K
     [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(i,:),data,labels');
      %Tree - minparent 1
@@ -252,5 +334,13 @@ for i=1:K
     yPredicted = eval(tree,XTest');
     incorrectPredictions = sum((YTest == yPredicted) == 0);
     Eout = (incorrectPredictions/size(XTest,2))*100;
-    EoutHec = [EoutHec; Eout];
+    EoutHecDT = [EoutHecDT; Eout];
+    
+    %SVM
+    KTrain = compute_gram_model(XTrain, XTrain, sigma);
+    model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
+    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
+    KTest = compute_gram_model(XTrain, XTest, sigma);
+    errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
+    EoutHecSVM = [EoutHecSVM; errorTest];
 end
