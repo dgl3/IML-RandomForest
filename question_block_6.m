@@ -8,9 +8,14 @@ labels = labels(perm);
 %External Cross-Validation
 indexes = create_KFolds(K,data,labels);
 Eout = [];
+
+testErrorFoldSVM = [];
+Indexes = [];
+
 for i=1:K
     [XTrainOut,YTrainOut,XTestOut,YTestOut] = get_partitions(indexes(i,:),data,labels);
     %Nested Cross-Validation
+    
     indexes = create_KFolds(K,XTrainOut,YTrainOut);
     
     trainingErrorFold1 = [];
@@ -33,8 +38,32 @@ for i=1:K
 
     trainingErrorFold15 = [];
     testErrorFold15 = [];
+    
+    testErrorFoldSVMintern = [];
+    testErrorParamSVMintern = [];
+    testRowSVMintern = [];
+    
     for j=1:K
-        [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(i,:),XTrainOut,YTrainOut);
+        [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(j,:),XTrainOut,YTrainOut);
+        
+        %Kernel SVM
+        for sigma=[0.1 0.5 1 3]
+            for lambda=[0.1 0.5 1 3]
+                KTrain = compute_gram_model(XTrain, XTrain, sigma);
+                model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
+                KTest = compute_gram_model(XTrain, XTest, sigma);
+                errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
+                testRowSVMintern = [testRowSVMintern errorTest];
+            end
+            testErrorParamSVMintern = [testErrorParamSVMintern; testRowSVMintern];
+            testRowSVMintern = [];
+        end
+        testErrorFoldSVMintern = cat(3,testErrorFoldSVMintern,testErrorParamSVMintern);
+        testErrorParamSVMintern = [];
+        
+        
+        
+        
         %Tree - minparent 1
         tree1 = classregtree(XTrain', YTrain, 'minparent',1);
         %view(tree1);
@@ -152,6 +181,42 @@ for i=1:K
         
         
     end
+    
+    testErrorSVM = mean(testErrorFoldSVMintern,3);
+    [~,IndexParams] = min(testErrorSVM(:));
+    Indexes = [Indexes; IndexParams];
+    
+    sigI = int8((IndexParams-1)/4);
+    switch sigI
+        case 0
+            sigma=0.1;
+        case 1
+            sigma=0.5;
+        case 2
+            sigma=1;
+        case 3
+            sigma=3;
+    end
+    
+    lamI = mod((IndexParams-1),4);
+    switch lamI
+        case 0
+            lambda=0.1;
+        case 1
+            lambda=0.5;
+        case 2
+            lambda=1;
+        case 3
+            lambda=3;
+    end
+    
+    KTrainOut = compute_gram_model(XTrainOut, XTrainOut, sigma);
+    model = train_dual_kernel_SVM_lambda(XTrainOut, YTrainOut, lambda, KTrainOut);
+    KTestOut = compute_gram_model(XTrainOut, XTestOut, sigma);
+    errorTestOut = test_dual_kernel_SVM_lambda(YTestOut, YTrainOut, model, KTestOut);
+    
+    testErrorFoldSVM = [testErrorFoldSVM; errorTestOut];
+    
     %Minparent = 1, 2 or 3 -> I will use minparent equal to 1
     tree = classregtree(XTrainOut', YTrainOut, 'minparent',1);
     yPredicted= eval(tree,XTestOut');
@@ -161,3 +226,5 @@ for i=1:K
     Eout = [Eout; error];
 
 end
+
+testErrorFoldSVMavg = mean(testErrorFoldSVM);
