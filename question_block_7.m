@@ -10,6 +10,9 @@ SFac = load('fac.mat');
 SGer = load('ger.mat');
 SHec = load('hec.mat');
 
+sigma=0.1;
+lambda=0.1;
+
 %aus.mat
 dataAus = SAus.Data;
 labelsAus = SAus.labels;
