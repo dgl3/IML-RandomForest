@@ -2,6 +2,10 @@ load('example_dataset_1.mat');
 K = 5;
 indexes = create_KFolds(K,data,labels);
 
+perm = randperm(size(data,2));
+data = data(:,perm);
+labels = labels(perm);
+
 trainingErrorFold1 = [];
 testErrorFold1 = [];
 
