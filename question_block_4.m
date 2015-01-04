@@ -29,17 +29,41 @@ testErrorFold10 = [];
 trainingErrorFold15 = [];
 testErrorFold15 = [];
 
+trainErrorFoldSVM = [];
+testErrorFoldSVM = [];
+trainErrorParamSVM = [];
+testErrorParamSVM = [];
+trainRowSVM = [];
+testRowSVM = [];
+
 for i=1:K
     %[XTrain, YTrain] = get_fold(indexes(i,:),data,labels);
     [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(i,:),data,labels);
+    
     %Kernel SVM
-    KTrain = compute_gram_model(XTrain, XTrain, sigma);
-    model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
-    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
-    KTest = compute_gram_model(XTrain, XTest, sigma);
-    errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
+    for sigma=[0.1 0.5 1 3]
+        for lambda=[0.1 0.5 1 3]
+            KTrain = compute_gram_model(XTrain, XTrain, sigma);
+            model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
+            errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
+            KTest = compute_gram_model(XTrain, XTest, sigma);
+            errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
+            trainRowSVM = [trainRowSVM errorTrain];
+            testRowSVM = [testRowSVM errorTest];
+        end
+        trainErrorParamSVM = [trainErrorParamSVM; trainRowSVM];
+        testErrorParamSVM = [testErrorParamSVM; testRowSVM];
+        trainRowSVM = [];
+        testRowSVM = [];
+    end
+    trainErrorFoldSVM = cat(3,trainErrorFoldSVM,trainErrorParamSVM);
+    testErrorFoldSVM = cat(3,testErrorFoldSVM,testErrorParamSVM);
+    trainErrorParamSVM = [];
+    testErrorParamSVM = [];
     %Average error surface --> errorTrain & errorTest for each value of
     %sigma & lambda
+    
+    
     
     %Tree - minparent 1
     tree1 = classregtree(XTrain', YTrain, 'minparent',1);
@@ -119,3 +143,6 @@ for i=1:K
     
 
 end
+
+trainErrorSVM = mean(trainErrorFoldSVM,3);
+testErrorSVM = mean(testErrorFoldSVM,3);
