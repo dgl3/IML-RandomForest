@@ -1,4 +1,4 @@
-function Y = getY(xi,model,K,labels)
-    Y = sum(K(:,xi).*(labels.*model));
+function Y = getY(model,K,labels)
+    Y = K'*(labels.*model);
 end
 

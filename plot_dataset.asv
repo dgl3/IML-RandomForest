@@ -24,8 +24,18 @@ function [ ] = plot_dataset( data, labels, model, sigma )
     
     Y = getY(model,KGrid,labels);
     
-    contour(x1Grid,x2Grid,reshape(Y,84,87));
+    contour(xGrid(:,1),xGrid(:,2),Y);
     
+    lineX=[];
+    lineY=[];
+    for i=1:size(data,2)
+        X = data(1,i);
+        lineX=[lineX, X];
+        %Y = getY(i,model,K,labels);
+        lineY=[lineY, Y];
+    end
+    %plot(lineX, lineY);
+    scatter(lineX, lineY, 'b*');
     hold off;
 end
 
