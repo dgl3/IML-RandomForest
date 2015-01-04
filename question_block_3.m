@@ -1,6 +1,12 @@
 %K-Fold crossvalidation
 load('example_dataset_1.mat');
 K = 10;
+
+%randomly sorting the data
+perm = randperm(size(data,2));
+data = data(:,perm);
+labels = labels(perm);
+
 indexes = create_KFolds(K,data,labels);
 [class1,class2] = compute_class_frequency(labels);
 frequency = class1/size(data,2);
