@@ -1,5 +1,11 @@
 load('example_dataset_1.mat');
 K = 5;
+sigma = 1; lambda = 1;
+%randomly sorting the data
+perm = randperm(size(data,2));
+data = data(:,perm);
+labels = labels(perm);
+
 indexes = create_KFolds(K,data,labels);
 
 trainingErrorFold1 = [];
@@ -24,9 +30,16 @@ trainingErrorFold15 = [];
 testErrorFold15 = [];
 
 for i=1:K
-    [XTrain, YTrain] = get_fold(indexes(i,:),data,labels);
+    %[XTrain, YTrain] = get_fold(indexes(i,:),data,labels);
+    [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(i,:),data,labels);
     %Kernel SVM
-    %Average error surface
+    KTrain = compute_gram_model(XTrain, XTrain, sigma);
+    model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
+    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
+    KTest = compute_gram_model(XTrain, XTest, sigma);
+    errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
+    %Average error surface --> errorTrain & errorTest for each value of
+    %sigma & lambda
     
     %Tree - minparent 1
     tree1 = classregtree(XTrain', YTrain, 'minparent',1);

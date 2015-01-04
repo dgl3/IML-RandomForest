@@ -21,10 +21,9 @@ function [ ] = plot_dataset( data, labels, model, sigma )
     xGrid = [x1Grid(:),x2Grid(:)];
     
     KGrid = compute_gram_model(data, xGrid', sigma);
+    YGrid = getY(model,KGrid,labels);
     
-    Y = getY(model,KGrid,labels);
-    
-    contour(x1Grid,x2Grid,reshape(Y,84,87));
+    contour(x1Grid,x2Grid,reshape(YGrid,84,87));
     
     hold off;
 end

@@ -1,0 +1,6 @@
+function [ error ] = test_dual_kernel_SVM_lambda( labels, model, K )
+    Y = getY(model,K,labels);
+    errorI = sign(Y.*labels);
+    error = sum(abs(Y(errorI==-1)));
+end
+
