@@ -1,6 +1,6 @@
 function [ testIndexes ] = create_KFolds( K, data, labels )
     testIndexes = zeros(K,2,'int16');
-    sizeFold = int16(size(data,2)/10);
+    sizeFold = int16(size(data,2)/K);
     testIndexes(1,1) = 1;
     testIndexes(1,2) = sizeFold;
     for i=1:K-1

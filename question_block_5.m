@@ -23,9 +23,7 @@ testErrorFold10 = [];
 trainingErrorFold15 = [];
 testErrorFold15 = [];
 
-for i=1:K
-    XTrain = data(:,indexes(i,:)
-    YTrain =
+for i=1:size(indexes,1)
     [XTrain,YTrain,XTest,YTest] = get_partitions(indexes(i,:),data,labels);
     %Kernel SVM
     %Average error surface
@@ -41,6 +39,12 @@ for i=1:K
     trainingErrorFold1 = [trainingErrorFold1; trainingError1];
     
     
+    yPredicted = eval(tree1,XTest');
+    incorrectPredictions = sum((YTest == yPredicted) == 0);
+    testError1 = (incorrectPredictions/size(XTest,2))*100;
+    testErrorFold1 = [testErrorFold1; testError1];
+    
+    
     %Tree - minparent 2
     tree2 = classregtree(XTrain', YTrain, 'minparent',2);
     %view(tree2);
@@ -50,6 +54,12 @@ for i=1:K
     incorrectPredictions = sum((YTrain == yPredicted) == 0);
     trainingError2 = (incorrectPredictions/size(XTrain,2))*100;
     trainingErrorFold2 = [trainingErrorFold2; trainingError2];
+    
+    
+    yPredicted = eval(tree2,XTest');
+    incorrectPredictions = sum((YTest == yPredicted) == 0);
+    testError2 = (incorrectPredictions/size(XTest,2))*100;
+    testErrorFold2 = [testErrorFold2; testError2];
     
     
     %Tree - minparent 3
@@ -62,7 +72,13 @@ for i=1:K
     trainingError3 = (incorrectPredictions/size(XTrain,2))*100;
     trainingErrorFold3 = [trainingErrorFold3; trainingError3];
     
-
+    
+    yPredicted = eval(tree3,XTest');
+    incorrectPredictions = sum((YTest == yPredicted) == 0);
+    testError3 = (incorrectPredictions/size(XTest,2))*100;
+    testErrorFold3 = [testErrorFold3; testError3];
+    
+    
     %Tree - minparent 4
     tree4 = classregtree(XTrain', YTrain, 'minparent',4);
     %view(tree4);
@@ -74,6 +90,11 @@ for i=1:K
     trainingErrorFold4 = [trainingErrorFold4; trainingError4];
     
     
+    yPredicted = eval(tree4,XTest');
+    incorrectPredictions = sum((YTest == yPredicted) == 0);
+    testError4 = (incorrectPredictions/size(XTest,2))*100;
+    testErrorFold4 = [testErrorFold4; testError4];
+    
     %Tree - minparent 5
     tree5 = classregtree(XTrain', YTrain, 'minparent',5);
     %view(tree5);
@@ -83,6 +104,12 @@ for i=1:K
     incorrectPredictions = sum((YTrain == yPredicted) == 0);
     trainingError5 = (incorrectPredictions/size(XTrain,2))*100;
     trainingErrorFold5 = [trainingErrorFold5; trainingError5];
+    
+    
+    yPredicted = eval(tree5,XTest');
+    incorrectPredictions = sum((YTest == yPredicted) == 0);
+    testError5 = (incorrectPredictions/size(XTest,2))*100;
+    testErrorFold5 = [testErrorFold5; testError5];
     
     %Tree - minparent 10
     tree6 = classregtree(XTrain', YTrain, 'minparent',10);
@@ -94,7 +121,11 @@ for i=1:K
     trainingError6 = (incorrectPredictions/size(XTrain,2))*100;
     trainingErrorFold10 = [trainingErrorFold10; trainingError6];
     
-   
+    
+    yPredicted = eval(tree6,XTest');
+    incorrectPredictions = sum((YTest == yPredicted) == 0);
+    testError6 = (incorrectPredictions/size(XTest,2))*100;
+    testErrorFold10 = [testErrorFold10; testError6];
     
     %Tree - minparent 15
     tree7 = classregtree(XTrain', YTrain, 'minparent',10);
@@ -106,5 +137,9 @@ for i=1:K
     trainingError7 = (incorrectPredictions/size(XTrain,2))*100;
     trainingErrorFold15 = [trainingErrorFold15; trainingError7];
     
-
+    
+    yPredicted = eval(tree7,XTest');
+    incorrectPredictions = sum((YTest == yPredicted) == 0);
+    testError7 = (incorrectPredictions/size(XTest,2))*100;
+    testErrorFold15 = [testErrorFold15; testError7];
 end
