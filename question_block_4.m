@@ -9,25 +9,12 @@ labels = labels(perm);
 indexes = create_KFolds(K,data,labels);
 
 trainingErrorFold1 = [];
-testErrorFold1 = [];
-
 trainingErrorFold2 = [];
-testErrorFold2 = [];
-
 trainingErrorFold3 = [];
-testErrorFold3 = [];
-
 trainingErrorFold4 = [];
-testErrorFold4 = [];
-
 trainingErrorFold5 = [];
-testErrorFold5 = [];
-
 trainingErrorFold10 = [];
-testErrorFold10 = [];
-
 trainingErrorFold15 = [];
-testErrorFold15 = [];
 
 trainErrorFoldSVM = [];
 testErrorFoldSVM = [];
