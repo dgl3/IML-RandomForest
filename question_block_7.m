@@ -37,7 +37,6 @@ for i=1:K
     %SVM
     KTrain = compute_gram_model(XTrain, XTrain, sigma);
     model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
-    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
     KTest = compute_gram_model(XTrain, XTest, sigma);
     errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
     EoutAusSVM = [EoutAusSVM; errorTest];
@@ -70,7 +69,6 @@ for i=1:K
     %SVM
     KTrain = compute_gram_model(XTrain, XTrain, sigma);
     model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
-    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
     KTest = compute_gram_model(XTrain, XTest, sigma);
     errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
     EoutBcwSVM = [EoutBcwSVM; errorTest];
@@ -103,7 +101,6 @@ for i=1:K
     %SVM
     KTrain = compute_gram_model(XTrain, XTrain, sigma);
     model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
-    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
     KTest = compute_gram_model(XTrain, XTest, sigma);
     errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
     EoutBidSVM = [EoutBidSVM; errorTest];
@@ -137,7 +134,6 @@ for i=1:K
     %SVM
     KTrain = compute_gram_model(XTrain, XTrain, sigma);
     model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
-    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
     KTest = compute_gram_model(XTrain, XTest, sigma);
     errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
     EoutBreSVM = [EoutBreSVM; errorTest];
@@ -170,7 +166,6 @@ for i=1:K
     %SVM
     KTrain = compute_gram_model(XTrain, XTrain, sigma);
     model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
-    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
     KTest = compute_gram_model(XTrain, XTest, sigma);
     errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
     EoutCarSVM = [EoutCarSVM; errorTest];
@@ -204,7 +199,6 @@ for i=1:K
     %SVM
     KTrain = compute_gram_model(XTrain, XTrain, sigma);
     model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
-    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
     KTest = compute_gram_model(XTrain, XTest, sigma);
     errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
     EoutCmcSVM = [EoutCmcSVM; errorTest];
@@ -237,7 +231,6 @@ for i=1:K
     %SVM
     KTrain = compute_gram_model(XTrain, XTrain, sigma);
     model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
-    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
     KTest = compute_gram_model(XTrain, XTest, sigma);
     errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
     EoutEchSVM = [EoutEchSVM; errorTest];
@@ -270,7 +263,6 @@ for i=1:K
     %SVM
     KTrain = compute_gram_model(XTrain, XTrain, sigma);
     model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
-    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
     KTest = compute_gram_model(XTrain, XTest, sigma);
     errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
     EoutFacSVM = [EoutFacSVM; errorTest];
@@ -306,7 +298,6 @@ for i=1:K
     %SVM
     KTrain = compute_gram_model(XTrain, XTrain, sigma);
     model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
-    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
     KTest = compute_gram_model(XTrain, XTest, sigma);
     errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
     EoutGerSVM = [EoutGerSVM; errorTest];
@@ -339,7 +330,6 @@ for i=1:K
     %SVM
     KTrain = compute_gram_model(XTrain, XTrain, sigma);
     model = train_dual_kernel_SVM_lambda(XTrain, YTrain, lambda, KTrain);
-    errorTrain = test_dual_kernel_SVM_lambda(YTrain, YTrain, model, KTrain);
     KTest = compute_gram_model(XTrain, XTest, sigma);
     errorTest = test_dual_kernel_SVM_lambda(YTest, YTrain, model, KTest);
     EoutHecSVM = [EoutHecSVM; errorTest];
